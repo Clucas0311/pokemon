@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PokemonItem from "./components/PokemonItem";
 
+//Here
 function SinglePokemon() {
   const [pokemon, setPokemon] = useState(null);
   const { id } = useParams();
