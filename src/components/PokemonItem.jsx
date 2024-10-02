@@ -1,8 +1,9 @@
 import React from "react";
 import "./PokemonItem.css";
 import { useNavigate } from "react-router-dom";
+import { deletePokemon } from "../api";
 
-function PokemonItem({ pokemon, isSingle }) {
+function PokemonItem({ pokemon, isSingle, setPokedex }) {
   const navigate = useNavigate();
 
   const handleSeeDetails = () => {
@@ -12,6 +13,14 @@ function PokemonItem({ pokemon, isSingle }) {
   const handleBackButton = () => {
     navigate("/pokemon");
   };
+
+  const handleDelete = async () => {
+    await deletePokemon(pokemon.id);
+    setPokedex((prevState) =>
+      prevState.filter((poke) => poke.id !== pokemon.id)
+    );
+  };
+
   return (
     <div className="pokemon-card">
       <div className="pokemon-image">
@@ -34,6 +43,7 @@ function PokemonItem({ pokemon, isSingle }) {
       ) : (
         <button onClick={handleSeeDetails}>See Details</button>
       )}
+      {!isSingle && <button onClick={handleDelete}>Delete</button>}
     </div>
   );
 }

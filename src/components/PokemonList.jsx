@@ -8,7 +8,13 @@ function PokemonList({ pokedex, setPokedex }) {
       <AddPokemonForm setPokedex={setPokedex} />
       <div className="pokemon-container">
         {pokedex.map((pokemon) => {
-          return <PokemonItem key={pokemon.id} pokemon={pokemon} />;
+          return (
+            <PokemonItem
+              key={pokemon.id}
+              pokemon={pokemon}
+              setPokedex={setPokedex}
+            />
+          );
         })}
       </div>
     </div>

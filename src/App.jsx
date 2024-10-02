@@ -2,24 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import PokemonList from "./components/PokemonList";
 import SinglePokemon from "./SinglePokemon";
+import { getAllPokemon } from "./api";
 
 function App() {
   const [pokedex, setPokedex] = useState([]);
 
+  // To get all the pokemon for our app
   useEffect(() => {
     const fetchAllPokemon = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/pokedex");
-        const data = await response.json();
-        setPokedex(data);
-      } catch (error) {
-        console.error("Uh oh, there was an error catchin them all", error);
-      }
+      const pokemon = await getAllPokemon();
+      setPokedex(pokemon);
     };
 
     // Call function to use in useEffect
     fetchAllPokemon();
   }, []);
+
+  console.log("pokedex", pokedex);
   return (
     <div>
       <h1>Gotta Catch Em All</h1>

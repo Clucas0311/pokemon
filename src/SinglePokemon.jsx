@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PokemonItem from "./components/PokemonItem";
+import { getSinglePokemon } from "./api";
 
 //Here
 function SinglePokemon() {
@@ -10,13 +11,8 @@ function SinglePokemon() {
   useEffect(() => {
     // Create function
     const fetchSinglePokemon = async (id) => {
-      try {
-        const response = await fetch(`http://localhost:5000/pokedex/${id}`);
-        const singlePokemon = await response.json();
-        setPokemon(singlePokemon);
-      } catch (error) {
-        console.error("Error, fetching a single pokemon", error);
-      }
+      const singlePokemon = await getSinglePokemon(id);
+      setPokemon(singlePokemon);
     };
     // call function
     fetchSinglePokemon(id);

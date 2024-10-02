@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./AddPokemonForm.css";
+import { createPokemon } from "../api";
 
 function AddPokemonForm({ setPokedex }) {
   const [name, setName] = useState("");
@@ -10,34 +11,18 @@ function AddPokemonForm({ setPokedex }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5000/pokedex", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          number: number,
-          type1: type1,
-          type2: type2,
-          imageUrl: imageUrl,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Error Adding Pokemon");
-      }
-      const newPokemon = await response.json();
-      // Adds new pokemon to the state
-      setPokedex((prevState) => [...prevState, newPokemon]);
-      console.log("newPokemon", newPokemon);
-    } catch (error) {
-      console.error(
-        "There was an error adding all pokemon to the pokedex",
-        error
-      );
-    }
-    // Reset all input fields
+    const newPokemon = await createPokemon(
+      name,
+      number,
+      type1,
+      type2,
+      imageUrl
+    );
+
+    setPokedex((prevState) => {
+      return [...prevState, newPokemon];
+    });
+    //Reset all input fields
     setName("");
     setImageUrl("");
     setType1("");
